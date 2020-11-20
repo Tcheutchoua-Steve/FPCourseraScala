@@ -147,18 +147,20 @@ class NonEmpty(elem: Tweet, left: TweetSet, right: TweetSet) extends TweetSet {
   def union(that: TweetSet): TweetSet = that.filterAcc(aTweet => !this.contains(aTweet), this)
 
   def mostRetweeted: Tweet = {
-    def findMostRetweetedTweet(aTweet: Tweet, anotherTweet: Tweet): Tweet ={
+    def max(aTweet: Tweet, anotherTweet: Tweet): Tweet = {
       if(aTweet.retweets > anotherTweet.retweets) aTweet else anotherTweet
     }
 
     if (left.isEmpty && right.isEmpty) elem
-    else if(left.isEmpty) findMostRetweetedTweet(right.mostRetweeted, elem)
-    else if (right.isEmpty) findMostRetweetedTweet(left.mostRetweeted, elem)
-    else findMostRetweetedTweet(left.mostRetweeted, findMostRetweetedTweet(left.mostRetweeted, elem))
+    else if(left.isEmpty) max(right.mostRetweeted, elem)
+    else if (right.isEmpty) max(left.mostRetweeted, elem)
+    else {
+      val maxChild = max(left.mostRetweeted, right.mostRetweeted)
+      max(elem, maxChild)
+    }
   }
 
-  def descendingByRetweet: TweetList =
-    new Cons(mostRetweeted, remove(mostRetweeted).descendingByRetweet)
+  def descendingByRetweet: TweetList = new Cons(mostRetweeted, remove(mostRetweeted).descendingByRetweet)
   /**
    * The following methods are already implemented
    */
