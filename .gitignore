@@ -9,3 +9,6 @@ project/target/*
 objsets/target/*
 project/
 *.zip
+*/target/
+*/out
+*/export
