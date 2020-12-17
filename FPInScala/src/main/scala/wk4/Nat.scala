@@ -1,6 +1,6 @@
 package wk4
 
-import java.lang.Exception
+//Peano numbers
 
 abstract class Nat {
   def isZero: Boolean
@@ -13,7 +13,7 @@ abstract class Nat {
 object Zero extends Nat{
   override def isZero: Boolean = true
 
-  override def predecessor: Nat = throw new Exception("No predecessor for Zero")
+  override def predecessor: Nat = throw new Error("No predecessor for Zero")
 
   override def +(that: Nat): Nat = that
 
